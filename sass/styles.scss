@@ -25,12 +25,12 @@ $baseLineHeight: 24px;
             padding: 10px 0 5px;
             background: rgba(255,255,255, 0.95);
             z-index: 1;
-            @media (max-width: 767px) {
+            @media (max-width: 480px) {
                 padding-left: 74px;
             }
         }
         .media-body {
-            padding-top: 20px;
+            padding-top: $baseLineHeight;
         }
     }
     .media-highlight {
