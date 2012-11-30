@@ -20,19 +20,38 @@ var fixedOnScroll = function() {
     });
 };
 
+var highlightText = function() {
+    var url = document.location.toString();
+
+    $('.text-highlight').removeClass('text-highlight');
+
+    if (url.match('#')) {
+        if (url.split('#')[1]) {
+            $('#'+url.split('#')[1]).addClass('text-highlight');
+        }
+    }
+};
+
 $(window).on('scroll', function() { fixedOnScroll(); });
 
 $(function() {
+
+    $(window).bind('hashchange', function() {
+        highlightText();
+    });
+
+    $(window).trigger('hashchange');
+
     $('#sidebar .filter').on('click', function(e) {
         e.preventDefault();
 
-        $('.log .media').removeClass('highlight');
+        $('.log .media').removeClass('media-highlight');
         if ($(this).parents('li').hasClass('active')) {
             $(this).parents('li').removeClass('active');
         } else {
             $(this).parents('li').addClass('active')
                 .siblings().removeClass('active');
-            $('.media-heading:contains("' + $(this).data('filter') + '")').parents('.media').addClass('highlight');
+            $('.media-heading:contains("' + $(this).data('filter') + '")').parents('.media').addClass('media-highlight');
         }
     });
 });

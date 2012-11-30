@@ -28,10 +28,14 @@ $baseLineHeight: 24px;
             padding-top: 20px;
         }
     }
-    .highlight {
+    .media-highlight {
         .media-heading {
             color: hsl(0,50,50);
         }
+    }
+    .text-highlight {
+        color: hsl(0,50,50);
+        outline: 1px solid hsl(0,50,50);
     }
 }
 
