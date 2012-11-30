@@ -1,5 +1,38 @@
 // I gather this file is a starting point for the project.
 @import "bootstrap";
 
+.log {
+    .avatar {
+        display: block;
+        width: 64px;
+    }
+
+    .fixed {
+        .avatar {
+            height: 1px;
+            img {
+                position: fixed;
+                top: 10px;
+            }
+        }
+        .media-heading {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            padding: 10px 0 5px;
+            background: rgba(255,255,255, 0.95);
+        }
+        .media-body {
+            padding-top: 20px;
+        }
+    }
+    .highlight {
+        .media-heading {
+            color: hsl(0,50,50);
+        }
+    }
+}
+
+
 // Include responsive Bootstrap styles
-// @import "bootstrap-responsive";
+@import "bootstrap-responsive";

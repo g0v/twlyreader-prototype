@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>公報</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" media="screen" href="/stylesheets/styles.css">
+</head>
+<body>
+    <header role="banner">
+        <div class="navbar ">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a href="/" class="brand">公報READER</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">本週公報 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">2012/11/30 星期五</a></li>
+                                    <li><a href="#">2012/11/29 星期四</a></li>
+                                    <li><a href="#">2012/11/28 星期三</a></li>
+                                    <li><a href="#">2012/11/27 星期二</a></li>
+                                    <li><a href="#">2012/11/26 星期一</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">歷史公報</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <%= yield %>
+    </div>
+    <footer role="contentinfo">
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <!--
+    <script src="/javascripts/bootstrap-alert.js"></script>
+    <script src="/javascripts/bootstrap-button.js"></script>
+    <script src="/javascripts/bootstrap-carousel.js"></script>
+    -->
+    <script src="/javascripts/bootstrap-collapse.js"></script>
+    <script src="/javascripts/bootstrap-dropdown.js"></script>
+    <!--
+    <script src="/javascripts/bootstrap-modal.js"></script>
+    <script src="/javascripts/bootstrap-tab.js"></script>
+    <script src="/javascripts/bootstrap-tooltip.js"></script>
+    <script src="/javascripts/bootstrap-popover.js"></script>
+    <script src="/javascripts/bootstrap-transition.js"></script>
+    -->
+    <script src="/javascripts/app.js"></script>
+    <%= livereload_js if ENV["RACK_ENV"] != "production" && defined?(App)%>
+    <%= yield :js %>
+</body>
+</html>
