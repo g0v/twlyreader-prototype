@@ -1,7 +1,15 @@
 $baseFontSize: 16px;
 $baseLineHeight: 24px;
 
+@import "compass";
 @import "bootstrap";
+
+.navbar .brand {
+    @include replace-text-with-dimensions("twlyreader.png");
+    width: 61px;
+    height: 26px;
+    background-size: 61px 26px;
+}
 
 .log {
     .avatar {
