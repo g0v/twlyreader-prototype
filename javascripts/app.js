@@ -32,10 +32,32 @@ var highlightText = function() {
     }
 };
 
-$(window).on('scroll', function() { fixedOnScroll(); });
+//$(window).on('scroll', function() { fixedOnScroll(); });
 
 $(function() {
 
+    $.getJSON(JSON_URL, function(data) {
+        $.each(data, function() {
+            if (this[0].type === 'interp') {
+                $('#log').append('<hr>');
+
+                var $ul = $('<ul>');
+                $.each(this[0].people, function() {
+                    $ul.append('<li>' + this + '</li>');
+                });
+                $('#log').append($ul);
+
+                var $l = $('<div>');
+
+                $.each(this[1], function() {
+                    $l.append('<div class="media"><a class="avatar pull-left" href="#"><img class="media-object" src="http://placehold.it/100"></a><div class="media-body"><h4 class="media-heading">' + this.speaker + '</h4><p id="p1-1">' + this.content + '</p></div></div>');
+                });
+                $('#log').append($l);
+            }
+        });
+
+    });
+/*
     $(window).bind('hashchange', function() {
         highlightText();
     });
@@ -53,5 +75,5 @@ $(function() {
                 .siblings().removeClass('active');
             $('.media-heading:contains("' + $(this).data('filter') + '")').parents('.media').addClass('media-highlight');
         }
-    });
+    });*/
 });

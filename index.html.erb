@@ -5,7 +5,9 @@
   digest1 = Digest::MD5.hexdigest("MLY/陳冲")
   digest = Digest::MD5.hexdigest("MLY/王金平")
 %>
-
+<script>
+var JSON_URL = '/json/4004_interp.json';
+</script>
 <div class="row">
     <div id="sidebar" class="span2">
         <ul class="nav nav-list">
@@ -52,7 +54,8 @@
             </div>
         </div>
         <hr>
-        <div class="log">
+        <div id="log" class="log">
+            <!--
             <div class="media">
                 <a class="avatar pull-left" href="#">
                     <img class="media-object" src="http://avatars.io/50a65bb26e293122b0000073/<%= digest2 %>?size=small">
@@ -193,6 +196,7 @@
                     <p id="p14-1">委員剛剛提到的幾點，我一一跟您報告……</p>
                 </div>
             </div>
+            -->
         </div>
     </div>
 </div>
