@@ -36,6 +36,10 @@ var highlightText = function() {
 
 $(function() {
 
+    $(window).bind('hashchange', function() {
+        highlightText();
+    });
+
     $.getJSON(JSON_URL, function(data) {
         $.each(data, function(i) {
             if (this[0].type === 'interp') {
@@ -55,14 +59,8 @@ $(function() {
                 $('#log').append($l);
             }
         });
-
+        $(window).trigger('hashchange');
     });
-
-    $(window).bind('hashchange', function() {
-        highlightText();
-    });
-
-    $(window).trigger('hashchange');
 
     $('#sidebar .filter').on('click', function(e) {
         e.preventDefault();
