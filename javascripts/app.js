@@ -28,8 +28,10 @@ var highlightText = function() {
     if (url.match('#')) {
         if (url.split('#')[1]) {
             $('#'+url.split('#')[1]).addClass('text-highlight');
+            window.scrollTo(0, $('#'+url.split('#')[1]).parents('.media').offset().top );
         }
     }
+
 };
 
 //$(window).on('scroll', function() { fixedOnScroll(); });
@@ -50,7 +52,7 @@ $(function() {
                 var $l = $('<div>');
 
                 $.each(this[1], function(j) {
-                    $l.append('<div class="media"><a class="avatar pull-left" href="#"><img class="media-object" src="http://placehold.it/100"></a><div class="media-body"><h4 class="media-heading">' + this.speaker + '</h4><p id="p' + i + '-' + j + '">' + this.content + '</p></div></div>');
+                    $l.append('<div class="media"><a class="avatar pull-left" href="#"><img class="media-object" src="http://placehold.it/100"></a><div class="media-body"><h4 class="media-heading">' + this.speaker + '</h4><p id="p' + i + '-' + j + '">' + this.content + '<a href="#p' + i + '-' + j + '">#</a></p></div></div>');
                 });
                 $('#log').append($l);
             }
