@@ -41,23 +41,13 @@
         <%= yield %>
     </div>
     <footer role="contentinfo">
+        <address>twlyreader is a <a href="http://g0v.tw/">g0v</a> project.</address>
     </footer>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <!--
-    <script src="/javascripts/bootstrap-alert.js"></script>
-    <script src="/javascripts/bootstrap-button.js"></script>
-    <script src="/javascripts/bootstrap-carousel.js"></script>
-    -->
     <script src="/javascripts/bootstrap-collapse.js"></script>
     <script src="/javascripts/bootstrap-dropdown.js"></script>
-    <!--
-    <script src="/javascripts/bootstrap-modal.js"></script>
-    <script src="/javascripts/bootstrap-tab.js"></script>
-    <script src="/javascripts/bootstrap-tooltip.js"></script>
-    <script src="/javascripts/bootstrap-popover.js"></script>
-    <script src="/javascripts/bootstrap-transition.js"></script>
-    -->
     <script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js"></script>
+    <script src="/javascripts/handlebars-1.0.rc.1.js"></script>
     <script src="/javascripts/app.js"></script>
     <%= livereload_js if ENV["RACK_ENV"] != "production" && defined?(App)%>
     <%= yield :js %>

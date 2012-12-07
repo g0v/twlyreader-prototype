@@ -1,3 +1,5 @@
+/* FIXME: need a better algorithm to fast detect .log on screen
+
 var fixedOnScroll = function() {
     var w_pos = $(window).scrollTop(),
         w_height = $(window).height();
@@ -20,6 +22,15 @@ var fixedOnScroll = function() {
     });
 };
 
+var scrollTimer = null;
+$(window).on('scroll', function() {
+    if (scrollTimer) {
+        clearTimeout(scrollTimer);
+    }
+    scrollTimer = setTimeout(function() { fixedOnScroll(); }, 100);
+});
+*/
+
 var highlightText = function() {
     var url = document.location.toString();
 
@@ -28,64 +39,79 @@ var highlightText = function() {
     if (url.match('#')) {
         if (url.split('#')[1]) {
             $('#'+url.split('#')[1]).addClass('text-highlight');
-            window.scrollTo(0, $('#'+url.split('#')[1]).parents('.media').offset().top );
+            window.scrollTo(0, $('#'+url.split('#')[1]).closest('.media').offset().top);
         }
     }
 
 };
 
-//$(window).on('scroll', function() { fixedOnScroll(); });
-
 $(function() {
 
-    var avatars = [];
-    window.avatars = avatars;
+    var speakers = [],
+        avatars = [],
+        sidebarTmpl = Handlebars.compile($("#sidebar-template").html()),
+        speechTmpl = Handlebars.compile($("#speech-template").html()),
+        $logs = $('<div />');
 
-    $.getJSON(JSON_URL, function(data) {
-        $.each(data, function(i) {
-            if (this[0].type === 'interp') {
-                var $ul, $l, avatar_pos;
-                $('#log').append('<hr>');
+    $.getJSON(JSON_URL)
+        .success(function(data) {
+            $.each(data, function(i) {
+                if (this[0].type === 'interp') {
+                    var $l, $well, $ul, avatar_pos;
 
-                $ul = $('<ul>');
-                $.each(this[0].people, function() {
-                    $ul.append('<li>' + this + '</li>');
-                });
-                $('#log').append($ul);
+                    $l = $('<div class="interp" />');
 
-                $l = $('<div>');
+                    $well = $('<div class="well" />');
+                    $ul = $('<ul class="people" />');
+                    $.each(this[0].people, function() {
+                        $ul.append('<li>' + this + '</li>');
+                    });
+                    $well.append($ul);
+                    $l.append($well);
 
-                $.each(this[1], function(j) {
-                    var speaker = this.speaker.replace(/(委員|院長|主任)+/, "");
-                    avatar_pos = $.inArray("MLY/" + speaker, avatars);
+                    $.each(this[1], function(j) {
+                        var speaker = this.speaker;
+                        avatar_pos = $.inArray(speaker, speakers);
+                        if (avatar_pos < 0) {
+                            speakers.push(speaker);
+                            avatars.push(CryptoJS.MD5("MLY/" + speaker.replace(/(委員|院長|主任|部長)+/, "")).toString());
+                            avatar_pos = avatars.length - 1;
+                        }
 
-                    if (avatar_pos < 0) {
+                        $l.append(speechTmpl({
+                            "avatar": avatars[avatar_pos],
+                            "speaker": this.speaker,
+                            "content": this.content,
+                            "speech_pos": 'p' + i + '-' + j
+                        }));
+                    });
+                    $logs.append($l);
+                }
+            });
+            $('#log').append($logs);
 
-                        avatars.push("MLY/" + speaker);
-                        avatars.push(CryptoJS.MD5("MLY/" + speaker).toString());
-                        avatar_pos = avatars.length - 2;
-                    }
-                    $l.append('<div class="media"><a class="avatar pull-left" href="#"><img class="media-object" src="http://avatars.io/50a65bb26e293122b0000073/'+ avatars[avatar_pos+1] + '"></a><div class="media-body"><h4 class="media-heading">' + this.speaker + '</h4><p id="p' + i + '-' + j + '">' + this.content + '<a href="#p' + i + '-' + j + '">#</a></p></div></div>');
-                });
-                $('#log').append($l);
-            }
+            $('#sidebar').html(sidebarTmpl({ "speakers": speakers }));
+
+            $(window).bind('hashchange', function() {
+                highlightText();
+            });
+            $(window).trigger('hashchange');
         });
-        $(window).bind('hashchange', function() {
-            highlightText();
-        });
-        $(window).trigger('hashchange');
-    });
 
-    $('#sidebar .filter').on('click', function(e) {
+    $('#sidebar').on('click', '.filter', function(e) {
         e.preventDefault();
 
         $('.log .media').removeClass('media-highlight');
-        if ($(this).parents('li').hasClass('active')) {
-            $(this).parents('li').removeClass('active');
+        if ($(this).closest('li').hasClass('active')) {
+            $(this).closest('li').removeClass('active');
         } else {
-            $(this).parents('li').addClass('active')
+            $(this).closest('li').addClass('active')
                 .siblings().removeClass('active');
-            $('.media-heading:contains("' + $(this).data('filter') + '")').parents('.media').addClass('media-highlight');
+
+            var $highlights = $('.media-heading:contains("' + $(this).data('filter') + '")').closest('.media');
+            $highlights.addClass('media-highlight');
+
+            window.scrollTo(0, $highlights.closest('.interp').offset().top);
         }
     });
 });
