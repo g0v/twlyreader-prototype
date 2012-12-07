@@ -1,57 +1,8 @@
-<div class="row">
-    <div class="span2">
-        <div id="sidebar" class="sidebar">
-        </div>
-    </div>
-    <div class="span10">
-        <h1>立法院第 .. 屆第 .. 會期 第 .. 次</h1>
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" href="#report">
-                    報告事項
-                </a>
-            </div>
-            <div id="report" class="accordion-body collapse">
-                <div class="accordion-inner">
-                    ...
-                </div>
-            </div>
-        </div>
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">
-                質詢事項
-                </a>
-            </div>
-            <div id="collapseTwo" class="accordion-body collapse in">
-                <div class="accordion-inner">
-                    <div id="log" class="log">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="page-header">
+    <h1>Files</h1>
 </div>
-<script>
-var JSON_URL = '/json/4004_interp.json';
-</script>
-<script id="sidebar-template" type="text/x-handlebars-template">
-    <ul class="nav nav-list">
-        <li class="nav-header">快速標註</li>
-        {{#each speakers}}
-        <li><a href="#" class="filter" data-filter="{{this}}">{{this}}</a></li>
-        {{/each}}
-    </ul>
-</script>
-<script id="speech-template" type="text/x-handlebars-template">
-    <div class="media">
-        <a class="avatar pull-left" href="#">
-            <img class="media-object" src="http://avatars.io/50a65bb26e293122b0000073/{{avatar}}?size=small">
-        </a>
-        <div class="media-body">
-            <h4 class="media-heading">{{speaker}}</h4>
-            <p id="{{speech_pos}}">{{content}} <a href="#{{speech_pos}}">#</a></p>
-        </div>
-    </div>
-</script>
-
+<ul>
+<% Dir.glob("json/*.json").each do |path|%>
+    <li><a href="/reader.html?json_url=/<%= path %>"><%= path %></a></li>
+<% end %>
+</ul>

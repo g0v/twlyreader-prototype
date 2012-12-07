@@ -56,7 +56,7 @@ $(function() {
         $.getJSON(JSON_URL)
             .success(function(data) {
                 $.each(data, function(i) {
-                    if (this[0].type === 'interp') {
+                    if (this[0] && this[0].type === 'interp') {
                         var $l, $well, $ul, avatar_pos;
 
                         $l = $('<div class="interp" />');
