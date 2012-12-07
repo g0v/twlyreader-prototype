@@ -46,72 +46,74 @@ var highlightText = function() {
 };
 
 $(function() {
+    if (JSON_URL) {
+        var speakers = [],
+            avatars = [],
+            sidebarTmpl = Handlebars.compile($("#sidebar-template").html()),
+            speechTmpl = Handlebars.compile($("#speech-template").html()),
+            $logs = $('<div />');
 
-    var speakers = [],
-        avatars = [],
-        sidebarTmpl = Handlebars.compile($("#sidebar-template").html()),
-        speechTmpl = Handlebars.compile($("#speech-template").html()),
-        $logs = $('<div />');
+        $.getJSON(JSON_URL)
+            .success(function(data) {
+                $.each(data, function(i) {
+                    if (this[0].type === 'interp') {
+                        var $l, $well, $ul, avatar_pos;
 
-    $.getJSON(JSON_URL)
-        .success(function(data) {
-            $.each(data, function(i) {
-                if (this[0].type === 'interp') {
-                    var $l, $well, $ul, avatar_pos;
+                        $l = $('<div class="interp" />');
 
-                    $l = $('<div class="interp" />');
+                        $well = $('<div class="well" />');
+                        $ul = $('<ul class="people" />');
+                        $.each(this[0].people, function() {
+                            $ul.append('<li>' + this + '</li>');
+                        });
+                        $well.append($ul);
+                        $l.append($well);
 
-                    $well = $('<div class="well" />');
-                    $ul = $('<ul class="people" />');
-                    $.each(this[0].people, function() {
-                        $ul.append('<li>' + this + '</li>');
-                    });
-                    $well.append($ul);
-                    $l.append($well);
+                        $.each(this[1], function(j) {
+                            var speaker = this.speaker;
+                            avatar_pos = $.inArray(speaker, speakers);
+                            if (avatar_pos < 0) {
+                                speakers.push(speaker);
+                                avatars.push(CryptoJS.MD5("MLY/" + speaker.replace(/(委員|院長|主任|部長)+/, "")).toString());
+                                avatar_pos = avatars.length - 1;
+                            }
 
-                    $.each(this[1], function(j) {
-                        var speaker = this.speaker;
-                        avatar_pos = $.inArray(speaker, speakers);
-                        if (avatar_pos < 0) {
-                            speakers.push(speaker);
-                            avatars.push(CryptoJS.MD5("MLY/" + speaker.replace(/(委員|院長|主任|部長)+/, "")).toString());
-                            avatar_pos = avatars.length - 1;
-                        }
+                            $l.append(speechTmpl({
+                                "avatar": avatars[avatar_pos],
+                                "speaker": this.speaker,
+                                "content": this.content,
+                                "speech_pos": 'p' + i + '-' + j
+                            }));
+                        });
+                        $logs.append($l);
+                    }
+                });
+                $('#log').append($logs);
 
-                        $l.append(speechTmpl({
-                            "avatar": avatars[avatar_pos],
-                            "speaker": this.speaker,
-                            "content": this.content,
-                            "speech_pos": 'p' + i + '-' + j
-                        }));
-                    });
-                    $logs.append($l);
-                }
+                $('#sidebar').html(sidebarTmpl({ "speakers": speakers }));
+
+                $(window).bind('hashchange', function() {
+                    highlightText();
+                });
+                $(window).trigger('hashchange');
             });
-            $('#log').append($logs);
 
-            $('#sidebar').html(sidebarTmpl({ "speakers": speakers }));
+        $('#sidebar').on('click', '.filter', function(e) {
+            e.preventDefault();
 
-            $(window).bind('hashchange', function() {
-                highlightText();
-            });
-            $(window).trigger('hashchange');
+            $('.log .media').removeClass('media-highlight');
+            if ($(this).closest('li').hasClass('active')) {
+                $(this).closest('li').removeClass('active');
+            } else {
+                $(this).closest('li').addClass('active')
+                    .siblings().removeClass('active');
+
+                var $highlights = $('.media-heading:contains("' + $(this).data('filter') + '")').closest('.media');
+                $highlights.addClass('media-highlight');
+
+                window.scrollTo(0, $highlights.closest('.interp').offset().top);
+            }
         });
 
-    $('#sidebar').on('click', '.filter', function(e) {
-        e.preventDefault();
-
-        $('.log .media').removeClass('media-highlight');
-        if ($(this).closest('li').hasClass('active')) {
-            $(this).closest('li').removeClass('active');
-        } else {
-            $(this).closest('li').addClass('active')
-                .siblings().removeClass('active');
-
-            var $highlights = $('.media-heading:contains("' + $(this).data('filter') + '")').closest('.media');
-            $highlights.addClass('media-highlight');
-
-            window.scrollTo(0, $highlights.closest('.interp').offset().top);
-        }
-    });
+    }
 });
