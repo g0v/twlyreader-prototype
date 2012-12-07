@@ -11,7 +11,6 @@ $baseLineHeight: 24px;
     border-width: 0 0 1px;
 }
 
-
 .navbar .brand {
     @include replace-text-with-dimensions("twlyreader.png");
     width: 61px;
@@ -20,6 +19,9 @@ $baseLineHeight: 24px;
 }
 
 .log {
+    .media {
+        border-bottom: 1px solid #E8E8E8;
+    }
     .avatar {
         display: block;
         width: 54px;
