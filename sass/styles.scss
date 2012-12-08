@@ -70,6 +70,14 @@ $fontAwesomePath: "/font/fontawesome-webfont";
     background: hsl(60, 100%, 50%);
 }
 
+body {
+    background-image: image-url("lightpaperfibers.png");
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: image-url("lightpaperfibers@2x.png");
+        background-size: 500px 300px;
+    }
+
+}
 .brand {
     @include replace-text-with-dimensions("twlyreader.png");
 
