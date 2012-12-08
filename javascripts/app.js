@@ -46,7 +46,7 @@ var highlightText = function() {
 };
 
 $(function() {
-    if (JSON_URL) {
+    if (typeof(JSON_URL) != 'undefined') {
         var speakers = [],
             avatars = [],
             sidebarTmpl = Handlebars.compile($("#sidebar-template").html()),
@@ -56,7 +56,7 @@ $(function() {
         $('<div id="loading">').text('載入中...').appendTo('body');
         $.getJSON(JSON_URL)
             .fail(function() {
-                $('#loading').text('載入失敗！');
+                $('#loading').text('載入失敗：沒有找到檔案');
             })
             .success(function(data) {
                 $.each(data, function(i) {
@@ -95,6 +95,7 @@ $(function() {
                         $logs.append($l);
                     }
                 });
+
                 $('#log').append($logs);
 
                 $('#sidebar').html(sidebarTmpl({ "speakers": speakers }));
@@ -104,7 +105,13 @@ $(function() {
                 });
                 $(window).trigger('hashchange');
 
-                $('#loading').text('載入完成').fadeOut(1000);
+                if ($logs.find('div').length) {
+                    $('#loading').text('載入完成').fadeOut(1000);
+                } else {
+                    $('#loading').text('載入失敗：檔案裡沒有可顯示的內容');
+                }
+
+
             });
 
         $('#sidebar').on('click', '.filter', function(e) {
