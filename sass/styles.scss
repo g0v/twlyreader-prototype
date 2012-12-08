@@ -58,6 +58,17 @@ $fontAwesomePath: "/font/fontawesome-webfont";
 // Utility classes
 @import "bootstrap/utilities"; // Has to be last to override when necessary
 
+#loading {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: 100px;
+    padding: 5px;
+    line-height: 1em;
+    text-align: center;
+    margin-left: -50px;
+    background: hsl(60, 100%, 50%);
+}
 
 .brand {
     @include replace-text-with-dimensions("twlyreader.png");

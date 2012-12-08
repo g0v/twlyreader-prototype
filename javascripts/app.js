@@ -53,7 +53,11 @@ $(function() {
             speechTmpl = Handlebars.compile($("#speech-template").html()),
             $logs = $('<div />');
 
+        $('<div id="loading">').text('載入中...').appendTo('body');
         $.getJSON(JSON_URL)
+            .fail(function() {
+                $('#loading').text('載入失敗！');
+            })
             .success(function(data) {
                 $.each(data, function(i) {
                     if (this[0] && this[0].type === 'interp') {
@@ -99,6 +103,8 @@ $(function() {
                     highlightText();
                 });
                 $(window).trigger('hashchange');
+
+                $('#loading').text('載入完成').fadeOut(1000);
             });
 
         $('#sidebar').on('click', '.filter', function(e) {
