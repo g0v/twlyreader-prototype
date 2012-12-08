@@ -57,16 +57,16 @@ $(function() {
             .success(function(data) {
                 $.each(data, function(i) {
                     if (this[0] && this[0].type === 'interp') {
-                        var $l, $well, $ul, avatar_pos;
+                        var $l, $well, $people, avatar_pos;
 
                         $l = $('<div class="interp" />');
 
                         $well = $('<div class="well" />');
-                        $ul = $('<ul class="people" />');
+                        $people = $('<div class="people" />');
                         $.each(this[0].people, function() {
-                            $ul.append('<li>' + this + '</li>');
+                            $people.append('<span>' + this + '</span>、');
                         });
-                        $well.append($ul);
+                        $well.append($people);
                         $l.append($well);
 
                         $.each(this[1], function(j) {

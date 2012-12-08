@@ -4,23 +4,21 @@ $baseLineHeight: 24px;
 @import "compass";
 @import "bootstrap";
 
-// override
-
-.navbar-inner {
-    @include border-radius(0);
-    border-width: 0 0 1px;
-}
-
-.navbar .brand {
+.brand {
     @include replace-text-with-dimensions("twlyreader.png");
-    width: 61px;
-    height: 26px;
-    background-size: 61px 26px;
+
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+        background-image: image-url("twlyreader@2x.png");
+        background-size: 100% 100%;
+    }
 }
 
 .log {
     .media {
         border-bottom: 1px solid #E8E8E8;
+    }
+    .well {
+        margin-top: 20px;
     }
     .avatar {
         display: block;
@@ -68,6 +66,12 @@ $baseLineHeight: 24px;
     }
 }
 
+footer[role="contentinfo"] {
+    margin-top: 20px;
+    border-top: 1px solid #e8e8e8;
+    padding-top: 20px;
+    color: #999;
+}
 
 // Include responsive Bootstrap styles
 @import "bootstrap-responsive";
