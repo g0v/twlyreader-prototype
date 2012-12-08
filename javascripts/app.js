@@ -82,6 +82,9 @@ $(function() {
                                 "avatar": avatars[avatar_pos],
                                 "speaker": this.speaker,
                                 "content": this.content,
+                                "encoded_content": encodeURIComponent(this.content),
+                                "url": encodeURIComponent(window.location.href.split('#')[0]
+) + '%23p' + i + '-' + j,
                                 "speech_pos": 'p' + i + '-' + j
                             }));
                         });
