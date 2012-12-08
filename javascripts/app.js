@@ -86,7 +86,7 @@ $(function() {
                                 "avatar": avatars[avatar_pos],
                                 "speaker": this.speaker,
                                 "content": this.content,
-                                "encoded_content": encodeURIComponent(this.content),
+                                "encoded_content": encodeURIComponent(speaker.replace(/(委員|院長|主任|部長)+/, "") + "：「" + this.content + "」"),
                                 "url": encodeURIComponent(window.location.href.split('#')[0]
 ) + '%23p' + i + '-' + j,
                                 "speech_pos": 'p' + i + '-' + j
