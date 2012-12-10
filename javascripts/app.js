@@ -96,7 +96,7 @@ $(function() {
                     }
                 });
 
-                $('#log').append($logs);
+                $('#log').hide().append($logs).show(); // performance tweak
 
                 $('#sidebar').html(sidebarTmpl({ "speakers": speakers }));
 
