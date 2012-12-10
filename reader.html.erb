@@ -5,31 +5,7 @@
     </div>
     <div class="span10">
         <h1>立法院第 .. 屆第 .. 會期 第 .. 次</h1>
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" href="#report">
-                    報告事項
-                </a>
-            </div>
-            <div id="report" class="accordion-body collapse">
-                <div class="accordion-inner">
-                    ...
-                </div>
-            </div>
-        </div>
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">
-                質詢事項
-                </a>
-            </div>
-            <div id="collapseTwo" class="accordion-body collapse in">
-                <div class="accordion-inner">
-                    <div id="log" class="log">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="log" class="log"></div>
     </div>
 </div>
 <script>
@@ -51,7 +27,8 @@ var JSON_URL = "<%= params[:json_url] %>";
         <div class="media-body">
             <div class="pull-right">
                 <a href="#{{speech_pos}}" class="btn btn-mini"><i class="icon-globe"></i> 連結</a>
-                <a href="https://twitter.com/?status={{encoded_content}}%20{{url}}%20%23TWLYREADER" class="btn btn-mini" target="_blank"><i class="icon-twitter"></i> Tweet</a></div>
+                <a href="https://twitter.com/?status={{encoded_content}}%20{{url}}%20%23TWLYREADER" class="btn btn-mini" target="_blank"><i class="icon-twitter"></i> Tweet</a>
+            </div>
             <h4 class="media-heading">{{speaker}}</h4>
             <p id="{{speech_pos}}">{{content}}</p>
         </div>
